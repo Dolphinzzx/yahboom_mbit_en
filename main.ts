@@ -241,6 +241,8 @@ namespace mbit_Sensor {
     export function Ultrasonic(Trig: DigitalPin, Echo: DigitalPin): number {
 
         // send pulse
+	let list:Array<number> = [0, 0, 0, 0, 0];
+        for (let i = 0; i < 5; i++) {
         pins.setPull(Trig, PinPullMode.PullNone);
         pins.digitalWritePin(Trig, 0);
         control.waitMicros(2);
@@ -249,8 +251,12 @@ namespace mbit_Sensor {
         pins.digitalWritePin(Trig, 0);
 
         // read pulse
-        let d = pins.pulseIn(Echo, PulseValue.High, 23200);
-        return  Math.floor(d / 58);
+        let d = pins.pulseIn(Echo, PulseValue.High, 43200);
+	list[i] = Math.floor(d / 40)
+	}
+        list.sort();
+        let length = (list[1] + list[2] + list[3])/3;
+        return  Math.floor(length);
     }
 }
 
@@ -610,14 +616,10 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
-        }
-        if (speed2 <= 350) {
-            speed2 = 350
+
         }
 
         setPwm(12, 0, speed1);
@@ -639,15 +641,11 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
         }
-        if (speed2 <= 350) {
-            speed2 = 350
-        }
+
 
         setPwm(12, 0, 0);
         setPwm(13, 0, speed1);
@@ -669,15 +667,11 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
         }
-        if (speed2 <= 350) {
-            speed2 = 350
-        }
+
         
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
@@ -699,15 +693,11 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
         }
-        if (speed2 <= 350) {
-            speed2 = 350
-        }
+
         
         setPwm(12, 0, speed1);
         setPwm(13, 0, 0);
@@ -741,14 +731,10 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
-        }
-        if (speed2 <= 350) {
-            speed2 = 350
+
         }        
         
         setPwm(12, 0, 0);
@@ -771,15 +757,11 @@ namespace mbit_Robot {
         if (speed1 >= 4096) {
             speed1 = 4095
         }
-        if (speed1 <= 350) {
-            speed1 = 350
-        }
+
         if (speed2 >= 4096) {
             speed2 = 4095
         }
-        if (speed2 <= 350) {
-            speed2 = 350
-        }    
+  
             
         setPwm(12, 0, speed1);
         setPwm(13, 0, 0);
@@ -903,6 +885,8 @@ namespace mbit_Robot {
     export function Ultrasonic_Car(): number {
 
         // send pulse
+	let list:Array<number> = [0, 0, 0, 0, 0];
+        for (let i = 0; i < 5; i++) {
         pins.setPull(DigitalPin.P14, PinPullMode.PullNone);
         pins.digitalWritePin(DigitalPin.P14, 0);
         control.waitMicros(2);
@@ -910,9 +894,14 @@ namespace mbit_Robot {
         control.waitMicros(15);
         pins.digitalWritePin(DigitalPin.P14, 0);
 
-        // read pulse
+    
         let d = pins.pulseIn(DigitalPin.P15, PulseValue.High, 43200);
-        return  Math.floor(d / 58);
+	list[i] = Math.floor(d / 40)
+	        }
+        list.sort();
+        let length = (list[1] + list[2] + list[3])/3;
+        
+	return  Math.floor(length);
     }
 
     //% blockId=mbit_Music_Car block="Music_Car|%index"
